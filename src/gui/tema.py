@@ -1,7 +1,9 @@
-# Cores e constantes visuais centralizadas.
-# Antes estavam todas no launcher_gui.py (714 linhas).
-# Agora estao aqui para reutilizacao e manutencao facil.
+"""Tema e configuracoes visuais do projeto IMC.
 
+Centraliza cores, fontes e constantes de layout.
+"""
+
+# ==================== CORES ====================
 COR_FUNDO = "#F0F2F5"
 COR_CARD = "#FFFFFF"
 COR_TEXTO = "#1A202C"
@@ -9,25 +11,19 @@ COR_TEXTO_SEC = "#718096"
 COR_TEXTO_TERCIARIO = "#A0AEC0"
 COR_PRIMARIA = "#4A6CF7"
 COR_PRIMARIA_HOVER = "#3B5DE7"
-COR_PRIMARIA_ATIVO = "#2D4FD7"
 COR_PRIMARIA_LIGHT = "#E8EDFD"
 COR_PRIMARIA_GRADIENTE_TOP = "#5B7BFA"
 COR_PRIMARIA_GRADIENTE_BOTTOM = "#3A5BD9"
 COR_SUCESSO = "#38A169"
-COR_SUCESSO_LIGHT = "#C6F6D5"
-COR_SUCESSO_BG = "#F0FFF4"
 COR_ATENCAO = "#DD6B20"
-COR_ATENCAO_LIGHT = "#FEEBC8"
-COR_ATENCAO_BG = "#FFFAF0"
 COR_ERRO = "#E53E3E"
 COR_ERRO_LIGHT = "#FED7D7"
-COR_ERRO_BG = "#FFF5F5"
 COR_BORDA = "#E2E8F0"
-COR_BORDA_CLARA = "#EDF2F7"
 COR_INPUT_BG = "#F7FAFC"
 COR_SLIDER_TRACK = "#CBD5E0"
 COR_SLIDER_BG = "#E2E8F0"
 
+# ==================== FONTES ====================
 FONTE_FAMILY = "Segoe UI"
 FONTE_TITULO = (FONTE_FAMILY, 20, "bold")
 FONTE_SUBTITULO = (FONTE_FAMILY, 10)
@@ -37,5 +33,19 @@ FONTE_BOTAO = (FONTE_FAMILY, 12, "bold")
 FONTE_BOTAO_PEQUENO = (FONTE_FAMILY, 9)
 FONTE_PEQUENA = (FONTE_FAMILY, 8)
 FONTE_VALOR_GRANDE = (FONTE_FAMILY, 28, "bold")
-FONTE_VALOR_MEDIO = (FONTE_FAMILY, 18, "bold")
 FONTE_CLASSIFICACAO = (FONTE_FAMILY, 12, "bold")
+
+# ==================== LAYOUT ====================
+JANELA_LARGURA = 500
+JANELA_ALTURA = 700
+SCROLL_WIDTH = 480
+HEADER_HEIGHT = 130
+BARRA_PROGRESSO_MAX = 440
+
+# ==================== VALIDACAO ====================
+ALTURA_MIN = 0.5
+ALTURA_MAX = 2.5
+PESO_MIN = 20
+PESO_MAX = 300
+IDADE_MIN = 1
+IDADE_MAX = 150

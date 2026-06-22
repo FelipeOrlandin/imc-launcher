@@ -1,27 +1,21 @@
 from core.modelos import ResultadoIMC
+from core.validators import ALTURA_MIN, ALTURA_MAX, PESO_MIN, PESO_MAX, IDADE_MIN, IDADE_MAX
 
 
 def calcular_imc(nome: str, idade: int, altura: float, peso: float, ano_atual: int) -> ResultadoIMC:
     """Calcula o IMC usando padrao OMS (4 categorias).
-    
-    Antes havia inconsistencia entre core (3 categorias) e GUI (4 categorias).
-    Agora ambos usam o padrao OMS:
-      - Abaixo do peso: < 18.5
-      - Peso normal: 18.5 - 24.9
-      - Sobrepeso: 25 - 29.9
-      - Obesidade: >= 30
-    
+
     Returns:
         ResultadoIMC com dados estruturados
     Raises:
         ValueError: se os dados estiverem fora das faixas validas
     """
-    if not (0.5 <= altura <= 2.5):
-        raise ValueError("Altura deve ser entre 0.5m e 2.5m")
-    if not (20 <= peso <= 300):
-        raise ValueError("Peso deve ser entre 20kg e 300kg")
-    if not (1 <= idade <= 150):
-        raise ValueError("Idade deve ser entre 1 e 150 anos")
+    if not (ALTURA_MIN <= altura <= ALTURA_MAX):
+        raise ValueError(f"Altura deve ser entre {ALTURA_MIN}m e {ALTURA_MAX}m")
+    if not (PESO_MIN <= peso <= PESO_MAX):
+        raise ValueError(f"Peso deve ser entre {PESO_MIN}kg e {PESO_MAX}kg")
+    if not (IDADE_MIN <= idade <= IDADE_MAX):
+        raise ValueError(f"Idade deve ser entre {IDADE_MIN} e {IDADE_MAX} anos")
 
     nascimento = ano_atual - idade
     imc = peso / (altura ** 2)
