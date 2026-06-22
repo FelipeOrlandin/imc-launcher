@@ -4,23 +4,19 @@ import os
 if getattr(sys, 'frozen', False):
     base_path = os.path.dirname(sys.executable)
 else:
-    base_path = os.path.dirname(os.path.abspath(__file__))
+    base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-sys.path.insert(0, base_path)
+if base_path not in sys.path:
+    sys.path.insert(0, base_path)
 
 
 def main():
-    """Entry point principal do projeto.
-    
-    Detecta automaticamente se deve usar CLI ou GUI:
-    - Com argumentos: CLI (python -m src.main Nome Idade Altura Peso Ano)
-    - Sem argumentos: GUI (python -m src.main)
-    """
+    """Entry point principal do projeto."""
     if len(sys.argv) > 1:
-        from cli import main as cli_main
+        from .cli import main as cli_main
         cli_main()
     else:
-        from gui.app import AppIMC
+        from .gui.app import AppIMC
         app = AppIMC()
         app.executar()
 

@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
 
-from core.calculadora import calcular_imc
-from gui.widgets import Card, ValidatedEntry, SelectorButton
-from gui.tema import (
+from ..core.calculadora import calcular_imc
+from .widgets import Card, ValidatedEntry, SelectorButton
+from .tema import (
     COR_FUNDO, COR_CARD, COR_TEXTO, COR_TEXTO_SEC, COR_TEXTO_TERCIARIO,
     COR_PRIMARIA, COR_PRIMARIA_HOVER, COR_PRIMARIA_LIGHT,
     COR_PRIMARIA_GRADIENTE_TOP, COR_PRIMARIA_GRADIENTE_BOTTOM,
@@ -17,8 +17,12 @@ from gui.tema import (
 
 def criar_gradiente(canvas, x1, y1, x2, y2, cor1, cor2, passo=1):
     """Desenha um gradiente vertical no canvas."""
-    r1 = int(cor1[1:3], 16); g1 = int(cor1[3:5], 16); b1 = int(cor1[5:7], 16)
-    r2 = int(cor2[1:3], 16); g2 = int(cor2[3:5], 16); b2 = int(cor2[5:7], 16)
+    r1 = int(cor1[1:3], 16)
+    g1 = int(cor1[3:5], 16)
+    b1 = int(cor1[5:7], 16)
+    r2 = int(cor2[1:3], 16)
+    g2 = int(cor2[3:5], 16)
+    b2 = int(cor2[5:7], 16)
     altura = y2 - y1
     for i in range(0, altura, passo):
         frac = i / altura
@@ -26,18 +30,23 @@ def criar_gradiente(canvas, x1, y1, x2, y2, cor1, cor2, passo=1):
         g = int(g1 + (g2 - g1) * frac)
         b = int(b1 + (b2 - b1) * frac)
         cor = f"#{r:02x}{g:02x}{b:02x}"
-        canvas.create_line(x1, y1 + i, x2, y1 + i, fill=cor, width=passo+1)
+        canvas.create_line(x1, y1 + i, x2, y1 + i, fill=cor, width=passo + 1)
+
+
+ACEITOS = set("aeiouAEIOUáéíóúâêîôûãõàèìòùäëïöüçÁÉÍÓÚÂÊÎÔÛÃÕÀÈÌÒÙÄËÏÖÜÇ'-.")
 
 
 def validar_nome(texto):
     if len(texto) > 50:
         return False
-    return all(c.isalpha() or c.isspace() or c in "aeiouAEIOUaeiou '^.'-_/" for c in texto)
+    return all(c.isalpha() or c.isspace() or c in ACEITOS for c in texto)
 
 
 def validar_decimal(texto):
     if texto == "":
         return True
+    if texto in (".", ","):
+        return False
     texto = texto.replace(",", ".")
     partes = texto.split(".")
     if len(partes) > 2:
@@ -59,6 +68,7 @@ class AppIMC:
         self.root.geometry("500x700")
         self.root.resizable(False, False)
         self.root.configure(bg=COR_FUNDO)
+        self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
 
         w, h = 500, 700
         x = (self.root.winfo_screenwidth() - w) // 2
@@ -92,12 +102,21 @@ class AppIMC:
         self.scrollable.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
         self.canvas.create_window((0, 0), window=self.scrollable, anchor="nw", width=480)
 
-        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(10,0), pady=10)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y, padx=(0,10), pady=10)
+        self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(10, 0), pady=10)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y, padx=(0, 10), pady=10)
 
         def _mousewheel(event):
-            self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-        self.canvas.bind_all("<MouseWheel>", _mousewheel)
+            self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+        def _on_enter(event):
+            self.canvas.bind_all("<MouseWheel>", _mousewheel)
+
+        def _on_leave(event):
+            self.canvas.unbind_all("<MouseWheel>")
+
+        self.canvas.bind("<MouseWheel>", _mousewheel)
+        self.canvas.bind("<Enter>", _on_enter)
+        self.canvas.bind("<Leave>", _on_leave)
 
     def _criar_header(self):
         header = tk.Frame(self.scrollable, bg=COR_PRIMARIA, highlightthickness=0)

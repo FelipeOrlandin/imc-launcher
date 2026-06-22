@@ -1,5 +1,5 @@
 import sys
-from core.calculadora import calcular_imc
+from ..core.calculadora import calcular_imc
 
 
 def main():

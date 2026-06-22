@@ -1,5 +1,5 @@
 import tkinter as tk
-from gui.tema import (
+from ..tema import (
     COR_CARD, COR_BORDA, COR_TEXTO, COR_TEXTO_SEC,
     COR_TEXTO_TERCIARIO, COR_PRIMARIA, COR_ERRO,
     COR_ERRO_LIGHT, COR_INPUT_BG, FONTE_INPUT, FONTE_PEQUENA,
@@ -7,13 +7,7 @@ from gui.tema import (
 
 
 class ValidatedEntry(tk.Frame):
-    """Entry com placeholder e validacao visual.
-    
-    Recursos:
-    - Placeholder que desaparece ao focar
-    - Borda muda de cor com validacao
-    - Helper text opcional
-    """
+    """Entry com placeholder e validacao visual."""
     def __init__(self, parent, placeholder="", validator=None,
                  max_chars=None, helper_text=None, **kwargs):
         super().__init__(parent, bg=COR_CARD)
@@ -22,6 +16,7 @@ class ValidatedEntry(tk.Frame):
         self.max_chars = max_chars
         self.has_placeholder = bool(placeholder)
         self.valid = True
+        self._flash_after_ids = []
 
         self.border = tk.Frame(self, bg=COR_BORDA, bd=0,
                                highlightthickness=1,
@@ -50,11 +45,11 @@ class ValidatedEntry(tk.Frame):
 
         if helper_text:
             help_frame = tk.Frame(self, bg=COR_CARD)
-            help_frame.pack(fill=tk.X, pady=(3,0))
+            help_frame.pack(fill=tk.X, pady=(3, 0))
             tk.Label(help_frame, text="\u2139", font=FONTE_PEQUENA,
-                    bg=COR_CARD, fg=COR_TEXTO_TERCIARIO).pack(side=tk.LEFT, padx=(0,3))
+                     bg=COR_CARD, fg=COR_TEXTO_TERCIARIO).pack(side=tk.LEFT, padx=(0, 3))
             tk.Label(help_frame, text=helper_text, font=FONTE_PEQUENA,
-                    bg=COR_CARD, fg=COR_TEXTO_TERCIARIO).pack(side=tk.LEFT)
+                     bg=COR_CARD, fg=COR_TEXTO_TERCIARIO).pack(side=tk.LEFT)
 
     def _clear_placeholder(self, event):
         if self.has_placeholder and self.entry.get() == self.placeholder:
@@ -89,13 +84,18 @@ class ValidatedEntry(tk.Frame):
         return "" if text == self.placeholder else text
 
     def set_valid(self, valid):
+        for after_id in self._flash_after_ids:
+            self.after_cancel(after_id)
+        self._flash_after_ids.clear()
+
         self.valid = valid
         if valid:
             self.border.configure(highlightbackground=COR_BORDA, bg=COR_BORDA)
         else:
             self.border.configure(highlightbackground=COR_ERRO, bg=COR_ERRO)
-            self.after(100, lambda: self.border.configure(bg=COR_ERRO_LIGHT))
-            self.after(300, lambda: self.border.configure(highlightbackground=COR_ERRO, bg=COR_ERRO))
+            id1 = self.after(100, lambda: self.border.configure(bg=COR_ERRO_LIGHT))
+            id2 = self.after(300, lambda: self.border.configure(highlightbackground=COR_ERRO, bg=COR_ERRO))
+            self._flash_after_ids.extend([id1, id2])
 
     def focus(self):
         self.entry.focus_set()

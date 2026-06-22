@@ -1,4 +1,4 @@
-from core.modelos import ResultadoIMC
+from .modelos import ResultadoIMC
 
 
 def calcular_imc(nome: str, idade: int, altura: float, peso: float, ano_atual: int) -> ResultadoIMC:
