@@ -100,6 +100,10 @@ class SelectorButton(tk.Frame):
             if event.widget == popup:
                 popup.after(100, lambda: popup.destroy())
 
+        def on_click_outside(event):
+            if not popup.winfo_containing(event.x_root, event.y_root):
+                popup.destroy()
+
         btn_frame = tk.Frame(outer, bg=COR_CARD)
         btn_frame.pack(fill=tk.X, padx=10, pady=(0, 10))
 
@@ -120,6 +124,8 @@ class SelectorButton(tk.Frame):
         listbox.bind("<Double-Button-1>", lambda e: confirm())
         popup.bind("<Return>", lambda e: confirm())
         popup.bind("<Escape>", lambda e: popup.destroy())
+        popup.bind("<FocusOut>", on_focus_out)
+        self.winfo_toplevel().bind("<Button-1>", on_click_outside, add="+")
         listbox.focus_set()
 
     def get(self):

@@ -9,5 +9,15 @@ else:
 if base_path not in sys.path:
     sys.path.insert(0, base_path)
 
+import core.modelos
+import core.calculadora
+import gui.tema
+import gui.widgets.card
+import gui.widgets.entry
+import gui.widgets.selector
+import gui.widgets
+import gui.app
+import cli
+
 from main import main
 main()
