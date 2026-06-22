@@ -1,3 +1,3 @@
-from .card import Card
-from .entry import ValidatedEntry
-from .selector import SelectorButton
+from gui.widgets.card import Card
+from gui.widgets.entry import ValidatedEntry
+from gui.widgets.selector import SelectorButton

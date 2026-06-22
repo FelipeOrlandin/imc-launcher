@@ -2,9 +2,9 @@ import unittest
 import sys
 import os
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from src.core.calculadora import calcular_imc
+from core.calculadora import calcular_imc
 
 
 class TestCalculadoraIMC(unittest.TestCase):

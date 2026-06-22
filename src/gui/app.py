@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
 
-from ..core.calculadora import calcular_imc
-from .widgets import Card, ValidatedEntry, SelectorButton
-from .tema import (
+from core.calculadora import calcular_imc
+from gui.widgets import Card, ValidatedEntry, SelectorButton
+from gui.tema import (
     COR_FUNDO, COR_CARD, COR_TEXTO, COR_TEXTO_SEC, COR_TEXTO_TERCIARIO,
     COR_PRIMARIA, COR_PRIMARIA_HOVER, COR_PRIMARIA_LIGHT,
     COR_PRIMARIA_GRADIENTE_TOP, COR_PRIMARIA_GRADIENTE_BOTTOM,
