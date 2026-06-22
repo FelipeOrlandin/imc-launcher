@@ -6,3 +6,7 @@ dist/
 *.spec
 .env
 venv/
+.mimocode/
+temp_script.py
+*.exe
+*.log
