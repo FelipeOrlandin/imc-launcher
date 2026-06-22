@@ -20,9 +20,6 @@ ACEITOS = set(
     "'-."
 )
 
-FAIXA_ALTURA = (0.5, 2.5)
-FAIXA_PESO = (20, 300)
-FAIXA_IDADE = (1, 150)
 MAX_NOME = 50
 
 ALTURA_MIN = 0.5
