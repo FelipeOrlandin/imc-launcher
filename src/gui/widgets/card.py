@@ -1,5 +1,5 @@
 import tkinter as tk
-from ..tema import COR_CARD, COR_BORDA
+from gui.tema import COR_CARD, COR_BORDA
 
 
 class Card(tk.Frame):

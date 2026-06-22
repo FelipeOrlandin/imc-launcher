@@ -1,4 +1,12 @@
 import sys
+import os
+
+if getattr(sys, 'frozen', False):
+    base_path = os.path.dirname(sys.executable)
+else:
+    base_path = os.path.dirname(os.path.abspath(__file__))
+
+sys.path.insert(0, base_path)
 
 
 def main():
@@ -9,10 +17,10 @@ def main():
     - Sem argumentos: GUI (python -m src.main)
     """
     if len(sys.argv) > 1:
-        from .cli import main as cli_main
+        from cli import main as cli_main
         cli_main()
     else:
-        from .gui.app import AppIMC
+        from gui.app import AppIMC
         app = AppIMC()
         app.executar()
 

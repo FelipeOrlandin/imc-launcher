@@ -1,5 +1,5 @@
 import tkinter as tk
-from ..tema import (
+from gui.tema import (
     COR_CARD, COR_BORDA, COR_TEXTO, COR_TEXTO_SEC,
     COR_PRIMARIA, COR_PRIMARIA_HOVER, COR_PRIMARIA_LIGHT,
     COR_INPUT_BG, FONTE_INPUT, FONTE_LABEL, FONTE_BOTAO_PEQUENO,
